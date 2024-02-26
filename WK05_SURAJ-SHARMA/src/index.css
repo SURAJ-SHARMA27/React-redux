@@ -1,0 +1,95 @@
+/* Customize styles to your preferences */
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .app-content {
+    flex: 1;
+    padding: 2rem;
+  }
+  
+  .restaurant-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .restaurant-card {
+    flex: 1 0 300px;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .dish-list {
+    list-style: none;
+    padding: 0;
+  }
+
+.restaurant-card {
+    text-align: center;
+    border: 1px solid #ddd; /* Add border for better visibility */
+    padding: 20px;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+  }
+  
+  .restaurant-card img {
+    width: 100%; /* Make the image fill the container width */
+    max-height: 150px; /* Set a maximum height for consistency */
+    object-fit: cover; /* Maintain aspect ratio while covering the container */
+    border-radius: 8px; /* Add border-radius to round the corners of the image */
+    margin-bottom: 10px; /* Add some margin below the image */
+  }
+  
+  .restaurant-card h2 {
+    font-size: 1.5em; /* Adjust font size for restaurant name */
+    margin-bottom: 8px; /* Add some margin below the heading */
+  }
+  
+  .restaurant-card p {
+    margin-bottom: 6px; /* Add some margin below paragraphs */
+  }
+  
+  .restaurant-card .rating-banner {
+    background-color: #ffcc00; 
+    color: #333; /* Text color */
+    padding: 6px 12px; /* Padding for the banner */
+    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 10px; /* Add some margin below the banner */
+    font-weight: bold; /* Bold text */
+    font-size: 1.2em; /* Adjust font size */
+  }  
+  /* index.css */
+
+/* index.css */
+
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .app-header {
+    background-color: #ff6347;
+    color: #fff; /* White text color */
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .app-header h1 {
+    margin: 0;
+  }
+  
+  .app-footer {
+    background-color: #333;
+    color: #fff; /* White text color */
+    text-align: center;
+    padding: 10px;
+    /* position: fixed; */
+    bottom: 0;
+    width: 100%;
+  }
+  

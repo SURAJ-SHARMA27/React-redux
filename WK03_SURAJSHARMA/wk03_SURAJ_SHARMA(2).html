@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donut Order Form</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        form {
+            width: 300px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: red;
+            color: #fff;
+            float: right;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <h2>Donut Shop- SURAJ SHARMA</h2>
+    
+
+    <form id="orderForm" onsubmit="calculateTotal(event)">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="cakeDonuts">Number of cake donuts (in dozens):</label>
+        <input type="number" id="cakeDonuts" name="cakeDonuts" min="0" required>
+
+        <label for="bakedDonuts">Number of baked donuts (in dozens):</label>
+        <input type="number" id="bakedDonuts" name="bakedDonuts" min="0" required>
+
+        <label for="minutes">Number of minutes:</label>
+        <input type="number" id="minutes" name="minutes" min="0" required>
+
+        <label for="subtotal">Subtotal:</label>
+        <input type="text" id="subtotal" name="subtotal" readonly>
+
+        <label for="tax">Tax (10%):</label>
+        <input type="text" id="tax" name="tax" readonly>
+
+        <label for="total">Total:</label>
+        <input type="text" id="total" name="total" readonly>
+
+        <button type="submit">Place Your Order</button>
+    </form>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    function calculateTotal(event) {
+        event.preventDefault();
+
+        const cakeDonutsInput = document.getElementById('cakeDonuts');
+        const bakedDonutsInput = document.getElementById('bakedDonuts');
+        const minutesInput = document.getElementById('minutes');
+        const subtotalInput = document.getElementById('subtotal');
+        const taxInput = document.getElementById('tax');
+        const totalInput = document.getElementById('total');
+        const resultDiv = document.getElementById('result');
+
+        const dozenPrice = 12; 
+        const donutPrice = 1;
+        const taxRate = 0.1;
+        if (!validateNumberInput(cakeDonutsInput) || !validateNumberInput(bakedDonutsInput) || !validateNumberInput(minutesInput)) {
+            resultDiv.innerHTML = "Please enter valid numbers for donuts and minutes.";
+            return;
+        }
+
+        const cakeDonuts = parseFloat(cakeDonutsInput.value) * dozenPrice;
+        const bakedDonuts = parseFloat(bakedDonutsInput.value) * dozenPrice;
+        const minutes = parseFloat(minutesInput.value);
+        const subtotal = cakeDonuts + bakedDonuts + minutes * donutPrice;
+
+        const tax = subtotal * taxRate;
+        const total = subtotal + tax;
+        subtotalInput.value = subtotal.toFixed(2);
+        taxInput.value = tax.toFixed(2);
+        totalInput.value = total.toFixed(2);
+
+        resultDiv.innerHTML = "";
+    }
+
+    function validateNumberInput(input) {
+        const value = parseFloat(input.value);
+        return !isNaN(value) && isFinite(value);
+    }
+</script>
+
+</body>
+</html>

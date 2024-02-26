@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        form, table {
+            background-color: #fff;
+            padding: 20px;
+            width: 45%;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #0b6d7a;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            float:right;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover{
+            background-color: #000000;
+
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<h1>React Assignment-2 Suraj Sharma</h1>
+<h3>Data Form</h3>
+<form id="professionalForm">
+    <label for="fullName">Full Name:<span class="required">*</span></label>
+    <input type="text" id="fullName" name="fullName" required>
+
+    <label for="lastName">Last Name:<span class="required">*</span></label>
+    <input type="text" id="lastName" name="lastName" required>
+
+    <label for="gender">Gender:<span class="required">*</span></label>
+    <select id="gender" name="gender" required>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+    </select>
+
+    <label for="age">Age:<span class="required">*</span></label>
+    <input type="number" id="age" name="age" required>
+
+    <label for="specialization">Specialization:<span class="required">*</span></label>
+    <select id="specialization" name="specialization" required>
+        <option value="doctor">Doctor</option>
+        <option value="engineer">Engineer</option>
+        <option value="teacher">Teacher</option>
+    </select>
+
+    <label for="experience">Experience:<span class="required">*</span></label>
+    <input type="number" id="experience" name="experience" required>
+
+    <label for="achievements">Achievements:<span class="required">*</span></label>
+    <textarea id="achievements" name="achievements" rows="4" required></textarea>
+
+    <button type="button" onclick="submitForm()">Submit</button>
+
+    <style>
+        .required {
+            color: red;
+        }
+    </style>
+</form>
+
+
+
+<div>
+    <label for="filterSpecialization">Filter by Specialization:</label>
+    <select id="filterSpecialization" onchange="filterTable()">
+        <option value="">All</option>
+        <option value="doctor">Doctor</option>
+        <option value="engineer">Engineer</option>
+        <option value="teacher">Teacher</option>
+    </select>
+
+    <label for="filterExperience">Filter by Experience:</label>
+    <input type="number" id="filterExperience" min="0" onchange="filterTable()">
+
+    <table id="professionalTable">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Specialization</th>
+                <th>Experience</th>
+                <th>Achievements</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    class Professional {
+        constructor(fullName, lastName, gender, age, specialization, experience, achievements) {
+            this.fullName = fullName;
+            this.lastName = lastName;
+            this.gender = gender;
+            this.age = age;
+            this.specialization = specialization;
+            this.experience = experience;
+            this.achievements = achievements;
+        }
+    }
+
+    const professionals = [];
+
+    function submitForm() {
+        const fullName = document.getElementById('fullName').value;
+        const lastName = document.getElementById('lastName').value;
+        const gender = document.getElementById('gender').value;
+        const age = document.getElementById('age').value;
+        const specialization = document.getElementById('specialization').value;
+        const experience = document.getElementById('experience').value;
+        const achievements = document.getElementById('achievements').value;
+        const professional = new Professional(fullName, lastName, gender, age, specialization, experience, achievements);
+        professionals.push(professional);
+        document.getElementById('professionalForm').reset();
+        updateTable();
+    }
+
+    function updateTable(filteredProfessionals) {
+    const tableBody = document.querySelector('#professionalTable tbody');
+    tableBody.innerHTML = '';
+
+    const professionalsToDisplay = filteredProfessionals || professionals;
+
+    if (professionalsToDisplay.length === 0) {
+        
+        const row = tableBody.insertRow();
+        const cell = row.insertCell();
+        cell.colSpan = 7; 
+        cell.textContent = 'No entries made yet.';
+    } else {
+    
+        professionalsToDisplay.forEach(professional => {
+            const row = tableBody.insertRow();
+
+            for (const key in professional) {
+                if (professional.hasOwnProperty(key)) {
+                    const cell = row.insertCell();
+                    cell.textContent = professional[key];
+                }
+            }
+        });
+    }
+}
+
+
+    function filterTable() {
+        const filterSpecialization = document.getElementById('filterSpecialization').value;
+        const filterExperience = document.getElementById('filterExperience').value;
+        const filteredProfessionals = professionals.filter(professional => {
+        console.log("saved",professional.specialization);
+        console.log("selected",filterSpecialization);
+
+            if (filterSpecialization && professional.specialization !== filterSpecialization) {
+                return false;
+            }
+
+            if (filterExperience && professional.experience !== filterExperience) {
+                return false;
+            }
+
+            return true;
+        });
+        console.log("result",filteredProfessionals)
+        updateTable(filteredProfessionals);
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+            updateTable();
+        });
+</script>
+
+</body>
+</html>
